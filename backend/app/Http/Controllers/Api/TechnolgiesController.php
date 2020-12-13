@@ -61,7 +61,7 @@ class TechnolgiesController extends Controller
          {
             $file = $request->file('image');
             $name_file = time()."_".$file->getClientOriginalName();
-            Storage::disk('uploads')->put("files/technologies/".$request->get('name')."/".$name_file,  \File::get($file));  
+            Storage::disk('uploads')->put("uploads/technologies/".$request->get('name')."/".$name_file,  \File::get($file));  
          }
 
 
@@ -104,7 +104,7 @@ class TechnolgiesController extends Controller
          {
             $file = $request->file('image');
             $name_file = time()."_".$file->getClientOriginalName();
-            Storage::disk('uploads')->put("files/technologies/".$technolgy->name."/".$name_file,  \File::get($file));  
+            Storage::disk('uploads')->put("uploads/technologies/".$technolgy->name."/".$name_file,  \File::get($file));  
          }
         $technolgy->image = $name_file;
         $technolgy->update();

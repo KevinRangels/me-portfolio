@@ -15,7 +15,7 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('technology_id')->unsigned();
+            // $table->bigInteger('technology_id')->unsigned();
             $table->string('name');
             $table->string('description');
             $table->string('contribution');
@@ -23,7 +23,7 @@ class CreateProjectsTable extends Migration
             $table->string('images')->nullable();
             $table->date('date');
             $table->timestamps();
-            $table->foreign('technology_id')->references('id')->on('technologies');
+            // $table->foreign('technology_id')->references('id')->on('technologies');
         });
     }
 

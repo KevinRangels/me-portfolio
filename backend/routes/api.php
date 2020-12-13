@@ -32,7 +32,7 @@ Route::delete('technologies/{id}', 'Api\TechnolgiesController@destroyTechnolgy')
 Route::post('technology-updated-image/{id}', 'Api\TechnolgiesController@updatedImage');
 //Projects
 Route::get('projects', 'Api\ProjectsController@getAllProject');
-Route::get('projects/{id}', 'Api\ProjectsController@getProject');
+Route::get('project/{id}', 'Api\ProjectsController@getProject');
 Route::post('project', 'Api\ProjectsController@storeProject');
 Route::put('projects/{id}', 'Api\ProjectsController@editProject');
 Route::delete('projects/{id}', 'Api\ProjectsController@destroyProject');

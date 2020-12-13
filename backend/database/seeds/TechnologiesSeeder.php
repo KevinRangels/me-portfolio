@@ -24,5 +24,23 @@ class TechnologiesSeeder extends Seeder
             'description' => 'Framework',
             'branch' => 'Backend'
         ]);
+        DB::table('technologies')->insert([
+            'language_id' => 3,
+            'name' => 'HTML',
+            'description' => 'lenguage de etiquetado',
+            'branch' => 'Backend'
+        ]);
+        DB::table('technologies')->insert([
+            'language_id' => 3,
+            'name' => 'CSS',
+            'description' => 'lenguage de estilos',
+            'branch' => 'Backend'
+        ]);
+        DB::table('technologies')->insert([
+            'language_id' => 3,
+            'name' => 'Bootstrap',
+            'description' => 'Framework CSS',
+            'branch' => 'Backend'
+        ]);
     }
 }

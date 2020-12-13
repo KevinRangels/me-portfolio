@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         $file = $request->file('photo');
         $name_file = time()."_".$file->getClientOriginalName();
-        Storage::disk('uploads')->put("images/profile/".$name_file,  \File::get($file));
+        Storage::disk('uploads')->put("uploads/profile/".$name_file,  \File::get($file));
         $user = User::findOrFail($id);
         $user->avatar = $name_file;
         $user->update();
@@ -67,7 +67,7 @@ class UserController extends Controller
     {
         $file = $request->file('cv');
         $name_file = time()."_".$file->getClientOriginalName();
-        Storage::disk('uploads')->put("files/cv/".$name_file,  \File::get($file));
+        Storage::disk('uploads')->put("uploads/cv/".$name_file,  \File::get($file));
         $user = User::findOrFail($id);
         $user->cv = $name_file;
         $user->update();

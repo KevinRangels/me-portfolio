@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Project;
+use App\Project_Technology;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,13 +37,13 @@ class ProjectsController extends Controller
 
     public function getAllProject()
     {
-        $project = Project::all();
-        return $this->sendResponse($project->toArray(), 'Tecnologias obtenidas con exito.');
+        $projects = Project::with('technologies')->get();
+        return $this->sendResponse($projects->toArray(), 'Proyectos obtenido con exito.');
     }
     public function getProject($id)
     {
-        $project = Project::find($id);
-        return $this->sendResponse($project->toArray(), 'Tecnologias obtenida con exito.');
+        $project = Project::with('technologies')->where('id', $id)->get();
+        return $this->sendResponse($project, 'Proyecto obtenido con exito.');
     }
 
     public function storeProject(Request $request)
@@ -63,14 +64,13 @@ class ProjectsController extends Controller
          {
             foreach($request->file('images') as $file)
             {
-                $name_file = time().'.'.$file->extension();
-                Storage::disk('uploads')->put("files/projects/".$request->get('name')."/".$name_file,  \File::get($file));  
+                $name_file = time()."_".$file->getClientOriginalName();
+                Storage::disk('uploads')->put("uploads/projects/".$request->get('name')."/".$name_file,  \File::get($file));  
                 $data[] = $name_file;  
             }
          }
 
           $project = new Project();
-          $project->technology_id = $request->get('technology_id');
           $project->name = $request->get('name');
           $project->description = $request->get('description');
           $project->contribution = $request->get('contribution');
@@ -78,6 +78,17 @@ class ProjectsController extends Controller
           $project->images = json_encode($data);
           $project->date = $request->get('date');
           $project->save();
+
+         // Save Technologies
+         $technologies = $request->get('technologies');
+         $technologies = explode(",", $technologies);
+         foreach ($technologies as $key => $value) {
+           $technologiesProject = new Project_Technology();
+           $technologiesProject->project_id = $project->id;
+           $technologiesProject->technology_id = $value;
+           $technologiesProject->save();
+         }
+
         return $this->sendResponse($project->toArray(), 'Project created successfully.');
     }
 

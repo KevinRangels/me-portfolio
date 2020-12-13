@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Technology extends Model
 {
     protected $fillable = [
-        'language_id', 'name', 'description', 'branch', 'image'
+        'id', 'language_id', 'name', 'description', 'branch', 'image'
     ];
+
+    public function projects() {
+        return $this->belongsToMany('App\Project');
+    }
 }

@@ -21,6 +21,7 @@
         <!-- MOVIL VIEW -->
         <navMovil
           :nav="information"
+          @handleOpenMenu="handleOpenMenu"
         />
         <InformationPersonal class="d-md-none" v-if="information === 1"/>
         <div class="px-2 pt-5 d-md-none" v-if="information === 3">
@@ -61,6 +62,10 @@
       </div>
       
     </div>
+    <MenuMovil
+      v-show="viewMenuMovil"
+      @handleCloseMenu="handleCloseMenu"
+    />
   </div>
 </template>
 
@@ -68,19 +73,22 @@
 import InformationPersonalDeskopt from '@/components/profile/PersonalInformation.vue'
 import ProyectContainer from '@/components/ProyectContainer.vue'
 import navMovil from '@/components/movil/navMovil.vue'
+import MenuMovil from '@/components/movil/Menu.vue'
 
 export default {
   name: 'PanelMain',
   components: {
     InformationPersonalDeskopt,
     ProyectContainer,
-    navMovil
+    navMovil,
+    MenuMovil
   },
   props: {
     msg: String
   },
   data(){
     return {
+      viewMenuMovil: false,
       information: 1
     }
   },
@@ -93,6 +101,12 @@ export default {
     },
     changueInformation_3(){
       this.information = 3;
+    },
+    handleOpenMenu () {
+      this.viewMenuMovil = true;
+    },
+    handleCloseMenu () {
+      this.viewMenuMovil = false;
     }
   }
 }

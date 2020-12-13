@@ -6,7 +6,7 @@
       <h3 v-if="nav === 3">Proyectos</h3>
     </div>
     <div class="navMovil__btn">
-      <i class="fas fa-align-justify"></i>
+      <i @click="openMenu" class="fas fa-align-justify"></i>
     </div>
   </div>
 </template>
@@ -17,6 +17,12 @@ export default {
   props: {
     nav: {
       default: null
+    }
+  },
+  methods: {
+    openMenu () {
+      console.log('ACA')
+      this.$emit('handleOpenMenu')
     }
   }
 }

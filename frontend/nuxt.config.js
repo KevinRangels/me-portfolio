@@ -49,6 +49,7 @@ export default {
   plugins: [
     '@/plugins/bootstrap-vue',
     { src: '~/plugins/VueAwesomeSwiper.js', ssr: false },
+    '~/plugins/directives.js'
   ],
   /*
   ** Auto import components

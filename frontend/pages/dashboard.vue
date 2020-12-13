@@ -8,7 +8,7 @@
     <div class="dashboard__content">
       <dashboardHeader/>
       <dashboardHome v-if="view === 'Home'"/>
-      <dashboardProfile v-if="view === 'Profile'" :data="data"/>
+      <dashboardProfile v-if="view === 'Profile' && data !== null" :data="data"/>
       <dashboardTechnologies v-if="view === 'Technologies'"/>
     </div>
     
@@ -26,7 +26,7 @@ import Preloader from '../components/ui/Preloader'
 export default {
   data() {
     return {
-     view: 'Profile',
+     view: 'Home',
      data: null,  
     };
   },

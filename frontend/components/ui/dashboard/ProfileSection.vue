@@ -4,45 +4,47 @@
       <h3>Profile</h3>
       <form class="dashboardProfile__form mt-5" v-on:submit.prevent="updatedProfile">
           <div class="dashboardProfile__contentInput">
-               <div class="dashboardProfile__inputAvatar mx-auto"></div>
-              <!--<input type="text" placeholder="Enter name" class="dashboardProfile__input"/> -->
+            <label for="profile_avatar" class="dashboardProfile__inputAvatar mx-auto">
+              <img v-if="data.avatar !== null" :src='"http://127.0.0.1:8000/images/profiles/"+data.avatar' alt="" class="img-fluid">
+            </label>
+            <input id="profile_avatar" ref="file_avatar" type="file" @change="handlePhotoUpload" class="dashboardProfile__input d-none"/>
           </div>
           <div class="dashboardProfile__contentInput">
-              <p>Name</p>
-              <input v-model="name"  type="text" placeholder="Enter name" class="dashboardProfile__input"/>
+            <p>Name</p>
+            <input v-model="name"  type="text" placeholder="Enter name" class="dashboardProfile__input"/>
           </div>
           <div class="dashboardProfile__contentInput">
-              <p>Age</p>
-              <input v-model="age" type="text" placeholder="Enter age" class="dashboardProfile__input"/>
+            <p>Age</p>
+            <input v-model="age" type="text" placeholder="Enter age" class="dashboardProfile__input"/>
           </div>
           <div class="dashboardProfile__contentInput">
-              <p>Number Phone</p>
-              <input v-model="phone" type="text" placeholder="Enter phone" class="dashboardProfile__input"/>
+            <p>Number Phone</p>
+            <input v-model="phone" type="text" placeholder="Enter phone" class="dashboardProfile__input"/>
           </div>
           <div class="dashboardProfile__contentInput">
-              <p>Studies</p>
-              <input v-model="studies" type="text" placeholder="Enter studies" class="dashboardProfile__input"/>
+            <p>Studies</p>
+            <input v-model="studies" type="text" placeholder="Enter studies" class="dashboardProfile__input"/>
           </div>
           <div class="dashboardProfile__contentInput">
-              <p>Location</p>
-              <input v-model="location" type="text" placeholder="Enter location" class="dashboardProfile__input"/>
+            <p>Location</p>
+            <input v-model="location" type="text" placeholder="Enter location" class="dashboardProfile__input"/>
           </div>
           <div class="dashboardProfile__contentInput">
-              <p>Email</p>
-              <input v-model="email" type="text" placeholder="Enter email" class="dashboardProfile__input"/>
+            <p>Email</p>
+            <input v-model="email" type="text" placeholder="Enter email" class="dashboardProfile__input"/>
           </div>
           <div class="dashboardProfile__contentInput">
-              <p>About me</p>
-              <textarea v-model="aboutme" class="dashboardProfile__contentInput-textarea"  cols="20" rows="5"></textarea>
+            <p>About me</p>
+            <textarea v-model="aboutme" class="dashboardProfile__contentInput-textarea"  cols="20" rows="5"></textarea>
           </div>
           <div class="dashboardProfile__contentInput  d-flex flex-column justify-content-center ">
-              <p>CV</p>
-              <!-- <input type="file" @change="cv_file" placeholder="Email" class="dashboardProfile__input"/> -->
+            <p>CV</p>
+              <label class="dashboard__mainBtn w-75 text-center" for="profile_cv">Update CV</label>
+            <input id="profile_cv" type="file" @change="cv_file" class="dashboardProfile__input d-none"/>
           </div>
           <div class="w-100 d-flex justify-content-end ">
-              <button class="dashboard__mainBtn" type="submit">Save</button>
+            <button class="dashboard__mainBtn" type="submit">Save</button>
           </div>
-          
       </form>
     </div>
   </div>
@@ -62,20 +64,25 @@ export default {
      studies: null,
      location: null,
      cv: null,
-     avatar: null,  
+     avatar: null
     };
   },
   methods: {
-      cv_file(event){
-        const image = event.target.files;
-        const reader = new FileReader();
-        reader.readAsDataURL(image[0]);
-        reader.onload = (e) => {
-            this.cv = e.target.result;
-            // this.get_image_1 = e.target.result;
-            console.log(this.cv);
-        };
-      },
+    handlePhotoUpload () {
+      console.log(this.avatar)
+      this.avatar = this.$refs.file_avatar.files[0]
+      this.updatedAvatar()
+    },
+    updatedAvatar () {
+      const formData = new FormData()
+      formData.append('photo', this.avatar)
+      this.$preloaders.open({component: Preloader})
+      let request = this.$axios.$post(`api/user-updated-photo/${this.data.id}`, formData);
+      request.then(res => {
+        console.log(res)
+        this.$preloaders.close({ transition: 'preloaders' });
+      });
+    },
       updatedProfile(){
         let params = {
             name: this.name,
@@ -131,6 +138,7 @@ export default {
 .dashboardProfile__content {
   background-color: #000;
   padding: 15px;
+  border-radius: 8px;
 }
 .dashboardProfile__content h3 {
   color: #fff;
@@ -165,6 +173,7 @@ export default {
     color: gold;
 }
 .dashboardProfile__inputAvatar{
+    cursor: pointer;
     display: block;
     width: 50%;
     border: none;
@@ -177,11 +186,13 @@ export default {
 }
 .dashboardProfile__contentInput-textarea{
     display: block;
+    border-radius: 8px;
     width: 100%;
     border: 2px solid gold;
     margin-bottom: 20px;
     background: none;
     outline: none;
     color: gold;
+    padding: 4px;
 }
 </style>

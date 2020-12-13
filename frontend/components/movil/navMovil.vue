@@ -1,6 +1,13 @@
 <template>
-  <div class="navMovil px-2 d-md-none">
-      <h3>Proyectos</h3>
+  <div class="navMovil p-2 d-md-none">
+    <div class="navMovil__titles">
+      <h3 v-if="nav === 1">Sobre mí</h3>
+      <h3 v-if="nav === 2">Tecnologias</h3>
+      <h3 v-if="nav === 3">Proyectos</h3>
+    </div>
+    <div class="navMovil__btn">
+      <i class="fas fa-align-justify"></i>
+    </div>
   </div>
 </template>
 
@@ -8,20 +15,28 @@
 export default {
   name: 'navMovil',
   props: {
-    msg: String
+    nav: {
+      default: null
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .navMovil{
-      background: gold;
-      display: flex;
-      justify-content: start;
-      position: absolute;
-      width: 100%;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-  }
+.navMovil {
+  background: gold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.navMovil h3 {
+  margin-bottom: 0;
+}
+.navMovil__btn i {
+  font-size: 22px;
+}
 </style>

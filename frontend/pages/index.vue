@@ -11,7 +11,13 @@
 </template>
 
 <script>
+import Billboard from '@/components/Billboard.vue'
+import PanelMain from '@/components/PanelMain.vue'
 export default {
+  components: {
+    Billboard,
+    PanelMain
+  },
   data () {
     return {
       viewBillboard: true,

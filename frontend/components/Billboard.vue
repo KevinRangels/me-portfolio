@@ -38,13 +38,13 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style scoped>
 	.billboard{
 		height: 100vh;
 		background-color: black;
 	}
   .billboard_container{
-    border: 1px solid red;
+    border: 1px solid gold;
     height: 80vh;
     display: flex;
     flex-direction: column;

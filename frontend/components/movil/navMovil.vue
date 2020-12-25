@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     openMenu () {
-      console.log('ACA')
       this.$emit('handleOpenMenu')
     }
   }

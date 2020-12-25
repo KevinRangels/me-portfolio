@@ -1,12 +1,17 @@
 <template>
   <div class="panelHeader">
+    <div class="panelHeader__containerBtns">
+      <div class="panelHeader__btnMenu">
+        <i @click="showMenu" class="fas fa-align-justify"></i>
+      </div>
+    </div>
     <div class="panelHeader__avatar"></div>
     <div class="panelHeader__containerName">
       <h1 class="panelHeader__name">Kevin Rangel</h1>
     </div>
     <div class="panelHeader__containerOption">
       <button class="mb-3">Contactame</button>
-      <div class="info1_containerSocialMedia px-2">
+      <div class="panelHeader__containerSocialMedia px-2">
         <a
           href="https://github.com/KevinRangels"
           class="socialMedia__btn fab fa-github "
@@ -27,12 +32,18 @@
         </a>
       </div>
     </div>
+    <div class="panelHeader__lineDiv mt-2"></div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PanelHeader"
+  name: "PanelHeader",
+  methods: {
+    showMenu () {
+      this.$emit('handleMenuDeskopt')
+    }
+  }
 };
 </script>
 
@@ -40,13 +51,29 @@ export default {
 .panelHeader {
   width: 100%;
   height: 40%;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   align-items: center;
   padding-top: 10px;
+  position: relative;
+}
+.panelHeader__containerBtns {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  top: 0;
+  left: 0;
+}
+.panelHeader__btnMenu {
+  margin-left: 4%;
+  margin-top: 4%;
+}
+.panelHeader__btnMenu i {
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 .panelHeader__avatar {
   border: 2px solid gold;
@@ -73,7 +100,7 @@ export default {
   border-radius: 8px;
   padding: 3px 0;
 }
-.info1_containerSocialMedia {
+.panelHeader__containerSocialMedia {
   width: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -83,9 +110,10 @@ export default {
   font-size: 22px;
   text-decoration: none;
 }
-.info1_text {
-  color: #ffffff;
-  font-size: 20px;
+.panelHeader__lineDiv {
+  height: 2px;
+  width: 80%;
+  background: gold;
 }
 @media (min-width:320px) and (max-width:520px){
   .panelHeader {

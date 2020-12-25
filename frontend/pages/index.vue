@@ -12,7 +12,7 @@
 
 <script>
 import Billboard from '@/components/Billboard.vue'
-import PanelMain from '@/components/PanelMain.vue'
+import PanelMain from '@/components/PanelMain/PanelMain.vue'
 export default {
   components: {
     Billboard,

@@ -1,25 +1,18 @@
 <template>
   <div class="panelmain">
     <div class="panelmain_control">
-      <div class="panelmain_container_perfil_img">
-        <div class="panelmain_perfil_img"></div>
-        <div class="panelmain_perfil_name">
-          <h1 class="panelmain_name">Kevin Rangel</h1>
-        </div>
-      </div>
-      <div class="panelmain_container_info">
+      <PanelHeader/>
+      <div class="panelmain_container_info px-md-3">
         <div class="pannelmain_info_title">
           <h2 v-if="information == 1">Información Personal</h2>
           <h2 v-if="information == 2">Tecnologias</h2>
           <h2 v-if="information == 3">Proyectos</h2>
         </div>
-        <div class="panelmain_info_text">
-          <p v-if="information == 1">Sección que da a conocer información relevante a mi persona</p>
-          <p v-if="information == 2">Esta sección muestra cuáles son las herramientas y técnicas que he usado en distintas tecnologías a la hora del desarrollo</p>
-          <p v-if="information == 3">Esta sección da a conocer los proyectos que he realizado y tecnologías utilizadas en estos</p>
-        </div>
+        <PanelInfo
+         :information="information"
+        />
         <!-- MOVIL VIEW -->
-        <navMovil
+        <NavMovil
           :nav="information"
           @handleOpenMenu="handleOpenMenu"
         />
@@ -70,17 +63,20 @@
 </template>
 
 <script>
+import PanelHeader from '@/components/PanelMain/PanelHeader.vue'
+import PanelInfo from '@/components/PanelMain/InfoDeskopt.vue'
 import InformationPersonalDeskopt from '@/components/profile/PersonalInformation.vue'
 import ProyectContainer from '@/components/ProyectContainer.vue'
-import navMovil from '@/components/movil/navMovil.vue'
+import NavMovil from '@/components/movil/navMovil.vue'
 import MenuMovil from '@/components/movil/Menu.vue'
 
 export default {
   name: 'PanelMain',
   components: {
+    PanelInfo,
     InformationPersonalDeskopt,
     ProyectContainer,
-    navMovil,
+    NavMovil,
     MenuMovil
   },
   props: {
@@ -127,7 +123,7 @@ export default {
     border: 3px solid gold;
     overflow: hidden;
   }
-  .panelmain_container_perfil_img{
+  /* .panelmain_container_perfil_img{
     width: 100%;
     height: 40%;
     border: 1px solid red;
@@ -147,7 +143,7 @@ export default {
   }
   .panelmain_name{
     color: white;
-  }
+  } */
   .panelmain_container_info{
     height: 53%;
     /* border: 1px solid blue; */
@@ -157,10 +153,8 @@ export default {
   .pannelmain_info_title{
     color: gold;
   }
-  .panelmain_info_text{
+  .panelmain__infoText{
     color: white;
-    padding-left: 3%;
-    padding-right: 3%;
     font-size: 1.3rem;
   }
   .panelmain_container_btns{
@@ -244,7 +238,7 @@ export default {
     .pannelmain_info_title{
       display: none;
     }
-    .panelmain_info_text{
+    .panelmain__infoText{
       display: none;
     }
     .panelmain_container_info{

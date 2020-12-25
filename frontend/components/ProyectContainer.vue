@@ -9,7 +9,7 @@
       </div>
 
       <b-tabs content-class="mt-0" fill>
-        <b-tab title="Info" active>
+        <b-tab title="Info" active class="px-3">
           <p class="proyectInfo_description_title">
             Descripción
           </p>
@@ -23,7 +23,19 @@
             Forme parte de un equipo de desarollo donde trabaje tanto el frontend como el backend de la pagina
           </p>
         </b-tab>
-        <b-tab title="Tecnologias"><p>I'm the second tab</p></b-tab>
+        <b-tab title="Tecnologias" class="px-3">
+          <div class="proyectInfo_techsContainer mt-3">
+            <div class="proyectInfo_techs mb-3" v-for="number in [0, 1, 2, 3, 4]"
+            v-bind:key="number">
+              <div class="proyectInfo_techContainerImg p-1  px-md-3">
+                <img src="../assets/img/html5.svg" class="img-fluid" alt="">
+              </div>
+              <div class="proyectInfo_techContainerName">
+                <h4>Html</h4>
+              </div>
+            </div>
+          </div>
+        </b-tab>
         <b-tab title="Entrar"></b-tab>
       </b-tabs>
     </div>
@@ -64,6 +76,36 @@ export default {
   color: white;
   font-size: 14px;
   margin-bottom: 0;
+}
+.proyectInfo_techsContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.proyectInfo_techs {
+  width: 47%;
+  display: flex;
+  align-items: center;
+  height: 35px;
+  background: #000;
+  border: 1px solid gold;
+  border-radius: 14px;
+}
+.proyectInfo_techContainerImg {
+  width: 30%;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  /* align-items: center; */
+}
+.proyectInfo_techContainerName {
+  width: 70%;
+  color: #ffffff
+}
+.proyectInfo_techContainerName h4 {
+  margin-bottom: 0;
+  font-size: 1.2rem;
 }
 @media (min-width:320px) and (max-width:520px){
  .ProyectContainer{

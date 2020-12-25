@@ -16,6 +16,7 @@
         <!-- MOVIL VIEW -->
         <NavMovil :nav="information" @handleOpenMenu="handleOpenMenu" />
         <InformationPersonal class="d-md-none" v-if="information === 1" />
+        <PanelTechs v-if="information === 2"/>
         <div class="px-2 pt-5 d-md-none" v-if="information === 3">
           <ProyectContainer
             v-for="number in [0, 1, 2, 3, 4]"
@@ -52,7 +53,9 @@
     <!-- INFORMACION PERSONAL Deskopt -->
     <InformationPersonalDeskopt v-if="information == 1" />
     <!-- TENCOLOGIAS -->
-    <div v-if="information == 2" class="panelmain_information"></div>
+    <div v-if="information == 2" class="panelmain_information">
+      <PanelTechs/>
+    </div>
     <!-- PORTAFOLIO -->
     <div v-if="information == 3" class="panelmain_information">
       <div class="panel_information_proyects">
@@ -70,8 +73,9 @@
 import PanelHeader from "@/components/PanelMain/PanelHeader.vue";
 import MenuDeskopt from "@/components/Deskopt/Menu.vue";
 import PanelInfo from "@/components/PanelMain/InfoDeskopt.vue";
-import InformationPersonalDeskopt from "@/components/profile/PersonalInformation.vue";
+import InformationPersonalDeskopt from "@/components/Deskopt/profile/PersonalInformation.vue";
 import ProyectContainer from "@/components/ProyectContainer.vue";
+import PanelTechs from "@/components/PanelMain/PanelTechs.vue";
 import NavMovil from "@/components/movil/navMovil.vue";
 import MenuMovil from "@/components/movil/Menu.vue";
 
@@ -81,6 +85,7 @@ export default {
     MenuDeskopt,
     PanelInfo,
     InformationPersonalDeskopt,
+    PanelTechs,
     ProyectContainer,
     NavMovil,
     MenuMovil

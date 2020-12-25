@@ -43,6 +43,9 @@ export default {
     font-size: 1.3rem;
   }
 @media (min-width: 320px) and (max-width: 520px) {
+  .panelmain__info{
+    display: none;
+  }
   .panelmain__infoText {
     display: none;
   }

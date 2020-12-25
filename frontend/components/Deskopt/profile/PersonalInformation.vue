@@ -11,19 +11,23 @@
         </div>
         <div class="info1_container_description">
           <label class="info1_label">Edad</label>
-          <h3 class="info1_text">26 años</h3>
+          <h3 class="info1_text">27 años</h3>
         </div>
         <div class="info1_container_description">
-          <label class="info1_label">Ubicacion</label>
-          <h3 class="info1_text">Venezuela</h3>
+          <label class="info1_label">Nacionalidad</label>
+          <h3 class="info1_text">Venezolano</h3>
         </div>
-        <div class="info1_container_description">
+        <!-- <div class="info1_container_description">
           <label class="info1_label">Número de telefono</label>
           <h3 class="info1_text">+54 4248644310</h3>
-        </div>
+        </div> -->
         <div class="info1_container_description">
           <label class="info1_label">Correo electronico</label>
           <h3 class="info1_text">krangel107@gmail.com</h3>
+        </div>
+        <div class="info1_container_description">
+          <label class="info1_label">CV</label>
+          <button class="mb-3 px-5">Descargar</button>
         </div>
         <div class="info1_container_description">
           <label class="info1_label">Sobre mí</label>
@@ -61,6 +65,18 @@ export default {
   .info1_container_description{
     margin-bottom: 20px;
     width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+  .info1_container_description button {
+    width: 40%;
+    background: gold;
+    color: #000000;
+    outline: none;
+    border: none;
+    font-size: 15px;
+    border-radius: 8px;
+    padding: 4px 0;
   }
   .info1_container{
     padding: 5%;

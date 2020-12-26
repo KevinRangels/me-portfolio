@@ -16,7 +16,7 @@
         <!-- MOVIL VIEW -->
         <NavMovil :nav="information" @handleOpenMenu="handleOpenMenu" />
         <InformationPersonal class="d-md-none" v-if="information === 1" />
-        <PanelTechs v-if="information === 2"/>
+        <PanelTechs class="d-md-none" v-if="information === 2"/>
         <div class="px-2 pt-5 d-md-none" v-if="information === 3">
           <ProyectContainer
             v-for="number in [0, 1, 2, 3, 4]"

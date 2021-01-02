@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     goToPage () {
-      this.$emit('handleShowPanel');
+      this.$router.push('/main')
     }
   }
 }

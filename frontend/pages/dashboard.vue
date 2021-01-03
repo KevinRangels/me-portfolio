@@ -25,7 +25,7 @@ import dashboardHome from '../components/ui/dashboard/HomeSection'
 import dashboardProfile from '../components/ui/dashboard/ProfileSection'
 import dashboardTechnologies from '../components/ui/dashboard/TechnologySection'
 import dashboardProjects from '../components/ui/dashboard/ProjectsSection'
-import ModalAddProject from '../components/ui/dashboard/Modals/ModalAddProject'
+import ModalAddProject from '../components/Dashboard/Projects/ModalAddProject'
 import Preloader from '../components/ui/Preloader'
 
 export default {

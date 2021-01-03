@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import Preloader from '../../../../components/ui/Preloader'
+import Preloader from '../../../components/ui/Preloader'
 import Multiselect from 'vue-multiselect'
 
 export default {

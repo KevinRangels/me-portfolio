@@ -12,7 +12,7 @@
           <span>Register Technology</span>
           <i class="fas fa-plus ml-3"></i>
       </div>
-      
+      <TechTable/>
       
     </div>
     <ModalAddTech/>
@@ -23,11 +23,13 @@
 import Preloader from '../../../components/ui/Preloader'
 import ModalAddTech from '../../../components/ui/dashboard/ModalAddTech'
 import ModalAddLanguage from '../../../components/ui/dashboard/ModalAddLanguage'
+import TechTable from '../../../components/Dashboard/Techs/TechsTable'
 
 export default {
   name: "dashboardTechnologies",
   props: ['data'],
   components: {
+    TechTable,
     ModalAddTech,
     ModalAddLanguage
   },

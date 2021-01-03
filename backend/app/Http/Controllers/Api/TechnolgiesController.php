@@ -62,14 +62,21 @@ class TechnolgiesController extends Controller
             $file = $request->file('image');
             $name_file = time()."_".$file->getClientOriginalName();
             Storage::disk('uploads')->put("uploads/technologies/".$request->get('name')."/".$name_file,  \File::get($file));  
+         } else {
+            $name_file = null;
          }
 
-
+        $arraySkills = explode(",", $request->skills);
+        foreach($arraySkills as $skill)
+          {
+            $skills[] = $skill;  
+          }
         $technology = new Technology;
         $technology->language_id = $request->language_id;
         $technology->name = $request->name;
         $technology->description = $request->description;
         $technology->branch = $request->branch;
+        $technology->skills = json_encode($skills);
         $technology->image = $name_file;
         $technology->save();
         return $this->sendResponse($technology->toArray(), 'Technology created successfully.');

@@ -19,6 +19,7 @@ class CreateTechnologiesTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('branch');
+            $table->string('skills');
             $table->string('image')->nullable();
             $table->timestamps();
             $table->foreign('language_id')->references('id')->on('languages');

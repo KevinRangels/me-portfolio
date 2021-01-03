@@ -38,11 +38,31 @@ class ProjectsController extends Controller
     public function getAllProject()
     {
         $projects = Project::with('technologies')->get();
+        foreach ($projects as $key => $valueProject) {
+            $valueProject->images = json_decode($valueProject->images);
+        }
+        foreach ($projects as $key => $value) {
+            foreach ($value->images as $key => $valueImage) {
+                $images[] =  url('/').'/uploads/projects/'.$value->name.'/'.$valueImage;
+            }
+            $value->images =  $images;
+            $images = array();
+        }
+
         return $this->sendResponse($projects->toArray(), 'Proyectos obtenido con exito.');
     }
     public function getProject($id)
     {
-        $project = Project::with('technologies')->where('id', $id)->get();
+        $project = Project::with('technologies')->get()->where('id', $id);
+        foreach ($project as $key => $valueProject) {
+            $valueProject->images = json_decode($valueProject->images);
+        }
+        foreach ($project as $key => $value) {
+            foreach ($value->images as $key => $valueImage) {
+                $images[] =  url('/').'/uploads/projects/'.$value->name.'/'.$valueImage;
+            }
+            $value->images =  $images;
+        }
         return $this->sendResponse($project, 'Proyecto obtenido con exito.');
     }
 
@@ -75,6 +95,7 @@ class ProjectsController extends Controller
           $project->description = $request->get('description');
           $project->contribution = $request->get('contribution');
           $project->link = $request->get('link');
+          $project->repository = $request->get('repository');
           $project->images = json_encode($data);
           $project->date = $request->get('date');
           $project->save();

@@ -17,8 +17,10 @@
         <i class="fas fa-plus"></i>
         <div class="projectTable__optionsContainer" v-if="viewBtn">
           <ul>
-            <li>Edit Project</li>
-            <li>View Project</li>
+            <li>Edit</li>
+            <li>View</li>
+            <li>Delete</li>
+            <li @click="imagesControl(data.id)">Images</li>
           </ul>
         </div>
       </div>
@@ -42,6 +44,9 @@ export default {
   methods: {
     showBtn () {
       this.viewBtn = !this.viewBtn
+    },
+    imagesControl (id) {
+      this.$emit('handleModalImages', id)
     }
   }
 }
@@ -75,7 +80,7 @@ export default {
   background: gold;
   position: absolute;
   top: -5px;
-  left: -108px;
+  left: -70px;
   width: max-content;
   border-radius: 10px;
   padding: 8px;

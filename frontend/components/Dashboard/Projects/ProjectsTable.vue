@@ -21,6 +21,7 @@
       v-for="project in projects"
       :key="project.id"
       :data='project'
+      @handleModalImages="handleModalImages"
     />
   </div>
 </template>
@@ -50,6 +51,9 @@ export default {
           this.projects = res.data
           this.$preloaders.close({ transition: 'preloaders' });
         });
+    },
+    handleModalImages (id) {
+      this.$emit('handleModalImages', id)
     }
   }
 }

@@ -37,6 +37,10 @@ class TechnolgiesController extends Controller
     public function getAllTechnolgy()
     {
         $technolgy = Technology::with('language')->get();
+        foreach ($technolgy as $key => $value) {
+            $value->skills = json_decode($value->skills);
+            $value->image =  url('/').'/uploads/technologies/'.$value->name.'/'.$value->image;
+        }
         return $this->sendResponse($technolgy->toArray(), 'Tecnologias obtenidas con exito.');
     }
     public function getTechnolgy($id)

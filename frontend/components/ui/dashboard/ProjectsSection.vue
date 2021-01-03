@@ -8,27 +8,44 @@
           <i class="fas fa-plus ml-3"></i>
         </div>
       </div>
-      <ProjectsTable/>
+      <ProjectsTable
+         @handleModalImages="handleModalImages"
+      />
     </div>
+    <ModalImagesProject
+      :project='project'
+      ref="modalProjectImages"
+    />
   </div>
 </template>
 
 <script>
-// import Preloader from '../../../components/ui/Preloader'
+import Preloader from '../../../components/ui/Preloader'
 import ProjectsTable from '../../../components/Dashboard/Projects/ProjectsTable'
+import ModalImagesProject from '../../Dashboard/Projects/ModalImagesProject'
 export default {
   name: "dashboardTechnologies",
   props: ['data'],
   components: {
-    ProjectsTable
+    ProjectsTable,
+    ModalImagesProject
   },
   data() {
     return {
-     
+      project: null
     };
   },
   methods: {
-      
+      handleModalImages(id) {
+        this.$preloaders.open({component: Preloader})
+        let request = this.$axios.$get(`api/project/${id}`);
+        request.then(res => {
+          console.log('project', res)
+          this.project = res.data
+          this.$refs.modalProjectImages.showModal()
+          this.$preloaders.close({ transition: 'preloaders' });
+        });
+      }
   },
   watch:{
      

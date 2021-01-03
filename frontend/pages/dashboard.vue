@@ -10,7 +10,10 @@
       <dashboardHome v-if="view === 'Home'"/>
       <dashboardProfile v-if="view === 'Profile' && data !== null" :data="data"/>
       <dashboardTechnologies v-if="view === 'Technologies'"/>
+      <dashboardProjects v-if="view === 'Projects'"/>
     </div>
+
+    <ModalAddProject/>
     
   </div>
 </template>
@@ -21,6 +24,8 @@ import dashboardHeader from '../components/ui/dashboard/Header'
 import dashboardHome from '../components/ui/dashboard/HomeSection'
 import dashboardProfile from '../components/ui/dashboard/ProfileSection'
 import dashboardTechnologies from '../components/ui/dashboard/TechnologySection'
+import dashboardProjects from '../components/ui/dashboard/ProjectsSection'
+import ModalAddProject from '../components/ui/dashboard/Modals/ModalAddProject'
 import Preloader from '../components/ui/Preloader'
 
 export default {
@@ -35,7 +40,9 @@ export default {
     dashboardHeader,
     dashboardHome,
     dashboardProfile,
-    dashboardTechnologies
+    dashboardTechnologies,
+    dashboardProjects,
+    ModalAddProject
   },
 
   methods: {

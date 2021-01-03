@@ -3,7 +3,7 @@
     <div class="dashboardNav__brand mb-4">
         <h4> <span><</span> KR <span>/></span></h4>
     </div>
-    <div class="dashboardNav__btnRegister mb-4">
+    <div class="dashboardNav__btnRegister mb-4" v-b-modal.addProject>
         <span>Register project</span>
         <i class="fas fa-plus ml-3"></i>
     </div>

@@ -36,7 +36,7 @@ class TechnolgiesController extends Controller
 
     public function getAllTechnolgy()
     {
-        $technolgy = Technology::all();
+        $technolgy = Technology::with('language')->get();
         return $this->sendResponse($technolgy->toArray(), 'Tecnologias obtenidas con exito.');
     }
     public function getTechnolgy($id)

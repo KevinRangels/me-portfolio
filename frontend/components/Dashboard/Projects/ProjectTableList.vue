@@ -1,16 +1,16 @@
 <template>
   <div class="projectTableList mt-2">
     <div class="projectTable__bodyItem">
-      <span>Name</span>
+      <span>{{data.name}}</span>
     </div>
     <div class="projectTable__bodyItem">
-      <span>Link</span>
+      <a :href='data.link' target="_blank">{{data.link}}</a>
     </div>
     <div class="projectTable__bodyItem">
-      <span>Repository</span>
+      <a :href='data.repository' target="_blank">{{data.repository}}</a>
     </div>
     <div class="projectTable__bodyItem">
-      <span>Date</span>
+      <span>{{data.date}}</span>
     </div>
     <div class="projectTable__bodyItem">
       <div class="projectTable__btnOption ml-3" @click="showBtn">
@@ -29,6 +29,11 @@
 <script>
 export default {
   name: 'projectTableList',
+  props: {
+    data: {
+      default: null
+    }
+  },
   data () {
     return {
       viewBtn: false

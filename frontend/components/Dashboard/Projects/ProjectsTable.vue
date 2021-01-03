@@ -18,18 +18,39 @@
       </div>
     </div>
     <ProjectTableList
-      v-for="index in [1,2,3,4,5]"
-      :key="index"
+      v-for="project in projects"
+      :key="project.id"
+      :data='project'
     />
   </div>
 </template>
 
 <script>
 import ProjectTableList from '../../../components/Dashboard/Projects/ProjectTableList'
+import Preloader from '../../../components/ui/Preloader'
 export default {
   name: 'ProjectTable',
   components: {
     ProjectTableList
+  },
+  data () {
+    return {
+      projects: null
+    }
+  },
+  mounted () {
+    this.getProjects()
+  },
+  methods: {
+    getProjects () {
+      this.$preloaders.open({component: Preloader})
+        let request = this.$axios.$get(`api/projects`);
+        request.then(res => {
+          console.log('projects', res)
+          this.projects = res.data
+          this.$preloaders.close({ transition: 'preloaders' });
+        });
+    }
   }
 }
 </script>

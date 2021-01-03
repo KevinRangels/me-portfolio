@@ -10,7 +10,7 @@
       <span>{{data.branch}}</span>
     </div>
     <div class="projectTable__bodyItem">
-        <a :href='"http://127.0.0.1:8000/uploads/technologies/"+data.name+"/"+data.image' target="_blank" rel="noopener noreferrer">View</a>
+        <a :href='data.image' target="_blank" rel="noopener noreferrer">View</a>
     </div>
     <div class="projectTable__bodyItem">
       <div class="projectTable__btnOption ml-3" @click="showBtn">

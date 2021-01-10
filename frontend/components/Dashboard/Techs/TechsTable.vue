@@ -21,6 +21,8 @@
       v-for="techs in technologies"
       :key="techs.id"
       :data='techs'
+      @handelGetTech="handelGetTech"
+      @handelDeleteTech="handelDeleteTech"
     />
   </div>
 </template>
@@ -50,6 +52,12 @@ export default {
           this.technologies = res.data
           this.$preloaders.close({ transition: 'preloaders' });
         });
+    },
+    handelGetTech (id) {
+      this.$emit('handelGetTech', id)
+    },
+    handelDeleteTech (id) {
+      this.$emit('handelDeleteTech', id)
     }
   }
 }

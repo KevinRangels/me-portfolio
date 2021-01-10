@@ -12,17 +12,27 @@
           <span>Register Technology</span>
           <i class="fas fa-plus ml-3"></i>
       </div>
-      <TechTable/>
+      <TechTable
+        @handelGetTech="handelGetTech"
+        @handelDeleteTech="handelDeleteTech"
+        ref="tableTech"
+      />
       
     </div>
     <ModalAddTech/>
+    <ModalEditTech
+      :tech="tech"
+      ref="modalEditTech"
+      @handleRefreshTable="handleRefreshTable"
+    />
   </div>
 </template>
 
 <script>
 import Preloader from '../../../components/ui/Preloader'
-import ModalAddTech from '../../../components/ui/dashboard/ModalAddTech'
+import ModalAddTech from '../../../components/Dashboard/Techs/ModalAddTech'
 import ModalAddLanguage from '../../../components/ui/dashboard/ModalAddLanguage'
+import ModalEditTech from '../../../components/Dashboard/Techs/ModalEditTech'
 import TechTable from '../../../components/Dashboard/Techs/TechsTable'
 
 export default {
@@ -35,11 +45,32 @@ export default {
   },
   data() {
     return {
-     
+      tech: null
     };
   },
   methods: {
-      
+    handelGetTech (id) {
+      this.$preloaders.open({component: Preloader})
+        let request = this.$axios.$get(`api/technology/${id}`);
+        request.then(res => {
+          console.log('technology', res.data[0])
+          this.tech = res.data[0]
+          this.$refs.modalEditTech.showModal()
+          this.$preloaders.close({ transition: 'preloaders' });
+        });
+    },
+    handelDeleteTech (id) {
+      this.$preloaders.open({component: Preloader})
+        let request = this.$axios.$delete(`api/technology/${id}`);
+        request.then(res => {
+          console.log('technology delete', res.data)
+          this.handleRefreshTable()
+          this.$preloaders.close({ transition: 'preloaders' });
+        });
+    },
+    handleRefreshTable () {
+      this.$refs.tableTech.getTechnologies()
+    }
   },
   watch:{
      

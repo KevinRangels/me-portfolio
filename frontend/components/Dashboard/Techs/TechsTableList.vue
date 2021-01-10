@@ -17,9 +17,9 @@
         <i class="fas fa-plus"></i>
         <div class="projectTable__optionsContainer" v-if="viewBtn">
           <ul>
-            <li>Edit Technology</li>
+            <li @click="getTech(data.id)">Edit Technology</li>
             <li>View Technology</li>
-            <li>Delete Technology</li>
+            <li @click="deleteTech(data.id)">Delete Technology</li>
           </ul>
         </div>
       </div>
@@ -43,6 +43,12 @@ export default {
   methods: {
     showBtn () {
       this.viewBtn = !this.viewBtn
+    },
+    getTech (id) {
+      this.$emit('handelGetTech', id)
+    },
+    deleteTech (id) {
+      this.$emit('handelDeleteTech', id)
     }
   }
 }

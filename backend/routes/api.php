@@ -24,11 +24,11 @@ Route::post('languages', 'Api\LanguagesController@storeLenguage');
 Route::put('languages/{id}', 'Api\LanguagesController@editLanguage');
 Route::delete('languages/{id}', 'Api\LanguagesController@destroyLanguage');
 //Technologies
-Route::get('technologies/{id}', 'Api\TechnolgiesController@getTechnolgy');
+Route::get('technology/{id}', 'Api\TechnolgiesController@getTechnolgy');
 Route::get('technologies', 'Api\TechnolgiesController@getAllTechnolgy');
 Route::post('technology', 'Api\TechnolgiesController@storeTechnolgy');
-Route::put('technologies/{id}', 'Api\TechnolgiesController@editTechnolgy');
-Route::delete('technologies/{id}', 'Api\TechnolgiesController@destroyTechnolgy');
+Route::post('technology/{id}', 'Api\TechnolgiesController@editTechnolgy');
+Route::delete('technology/{id}', 'Api\TechnolgiesController@destroyTechnolgy');
 Route::post('technology-updated-image/{id}', 'Api\TechnolgiesController@updatedImage');
 //Projects
 Route::get('projects', 'Api\ProjectsController@getAllProject');

@@ -39,14 +39,18 @@ class TechnolgiesController extends Controller
         $technolgy = Technology::with('language')->get();
         foreach ($technolgy as $key => $value) {
             $value->skills = json_decode($value->skills);
-            $value->image =  url('/').'/uploads/technologies/'.$value->name.'/'.$value->image;
+            $value->image =  url('/').'/uploads/technologies/'.$value->image;
         }
         return $this->sendResponse($technolgy->toArray(), 'Tecnologias obtenidas con exito.');
     }
     public function getTechnolgy($id)
     {
-        $technolgy = Technology::find($id);
-        return $this->sendResponse($technolgy->toArray(), 'Tecnologias obtenida con exito.');
+        $technolgy = Technology::with('language')->where('id', $id)->get();
+        foreach ($technolgy as $key => $value) {
+            $value->skills = json_decode($value->skills);
+            $value->image =  url('/').'/uploads/technologies/'.$value->image;
+        }
+        return $this->sendResponse($technolgy->toArray(), 'Tecnologia obtenida con exito.');
     }
 
     public function storeTechnolgy(Request $request)
@@ -65,7 +69,7 @@ class TechnolgiesController extends Controller
          {
             $file = $request->file('image');
             $name_file = time()."_".$file->getClientOriginalName();
-            Storage::disk('uploads')->put("uploads/technologies/".$request->get('name')."/".$name_file,  \File::get($file));  
+            Storage::disk('uploads')->put("uploads/technologies/".$name_file,  \File::get($file));  
          } else {
             $name_file = null;
          }
@@ -89,23 +93,41 @@ class TechnolgiesController extends Controller
 
     public function editTechnolgy($id, Request $request)
     {
-        $input = $request->all();
+        $technology = Technology::findOrFail($id);
+        // $input = $request->all();
 
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'description' => 'required',
-            'branch' => 'required'
-        ]);
+        // $validator = Validator::make($input, [
+        //     'name' => 'required',
+        //     'description' => 'required',
+        //     'branch' => 'required'
+        // ]);
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
+        // if ($validator->fails()) {
+        //     return $this->sendError('Validation Error.', $validator->errors());
+        // }
+        $arraySkills = explode(",", $request->skills);
+        foreach($arraySkills as $skill)
+         {
+           $skills[] = $skill;  
+         }
+        $technology->language_id = $request->language_id;
+        $technology->name = $request->name;
+        $technology->description = $request->description;
+        $technology->branch = $request->branch;
+        $technology->skills = json_encode($skills);
 
-        $technolgy = Technology::findOrFail($id);
-        $technolgy->update($request->all());
-        $technolgy->request = $request->all();
+        if($request->hasfile('image'))
+         {
+            $file = $request->file('image');
+            $name_file = time()."_".$file->getClientOriginalName();
+            Storage::disk('uploads')->put("uploads/technologies/".$name_file,  \File::get($file));  
+         } else {
+            $name_file = $technology->image;
+         }
+        $technology->image = $name_file;
 
-        return $this->sendResponse($technolgy->toArray(), 'Technology actualizada con exito.');
+        $technology->update();
+        return $this->sendResponse($technology->toArray(), 'Technology actualizada con exito.');
     }
 
     public function updatedImage($id, Request $request)

@@ -53,7 +53,7 @@ class ProjectsController extends Controller
     }
     public function getProject($id)
     {
-        $project = Project::with('technologies')->get()->where('id', $id);
+        $project = Project::with('technologies')->where('id', $id)->get();
         foreach ($project as $key => $valueProject) {
             $valueProject->images = json_decode($valueProject->images);
         }
@@ -137,12 +137,10 @@ class ProjectsController extends Controller
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'technology_id' => 'required',
+            // 'technology_id' => 'required',
             'name' => 'required',
             'description' => 'required',
-            'contribution' => 'required',
-            'link' => 'required',
-            'img_url' => 'required'
+            'contribution' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -150,10 +148,21 @@ class ProjectsController extends Controller
         }
 
         $project = Project::findOrFail($id);
+        // Save Technologies
+        Project_Technology::where('project_id', $project->id)->delete();
+        $technologies = $request->get('technologies');
+        $technologies = explode(",", $technologies);
+        foreach ($technologies as $key => $value) {
+          $technologiesProject = new Project_Technology();
+          $technologiesProject->project_id = $project->id;
+          $technologiesProject->technology_id = $value;
+          $technologiesProject->save();
+        }
+        // Update project
         $project->update($request->all());
         $project->request = $request->all();
 
-        return $this->sendResponse($project->toArray(), 'Technology actualizada con exito.');
+        return $this->sendResponse($project->toArray(), 'Project actualizado con exito.');
     }
 
 

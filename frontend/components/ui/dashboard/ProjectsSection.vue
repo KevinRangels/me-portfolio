@@ -9,12 +9,21 @@
         </div>
       </div>
       <ProjectsTable
-         @handleModalImages="handleModalImages"
+        ref="tableProject"
+        @handleModalEdit="handleModalEdit"
+        @handleModalImages="handleModalImages"
       />
     </div>
     <ModalImagesProject
       :project='project'
       ref="modalProjectImages"
+      @handleRefreshTable="handleRefreshTable"
+    />
+    <ModalEditProject
+      :project='project'
+      ref="modalEditProject"
+      @showModalControlImage="showModalControlImage"
+      @handleRefreshTable="handleRefreshTable"
     />
   </div>
 </template>
@@ -23,12 +32,14 @@
 import Preloader from '../../../components/ui/Preloader'
 import ProjectsTable from '../../../components/Dashboard/Projects/ProjectsTable'
 import ModalImagesProject from '../../Dashboard/Projects/ModalImagesProject'
+import ModalEditProject from '../../Dashboard/Projects/ModalEditProject'
 export default {
   name: "dashboardTechnologies",
   props: ['data'],
   components: {
     ProjectsTable,
-    ModalImagesProject
+    ModalImagesProject,
+    ModalEditProject
   },
   data() {
     return {
@@ -36,15 +47,32 @@ export default {
     };
   },
   methods: {
+     handleModalEdit (id) {
+       this.$preloaders.open({component: Preloader})
+       let request = this.$axios.$get(`api/project/${id}`);
+       request.then(res => {
+         console.log('project', res)
+         this.project = res.data[0]
+         this.$refs.modalEditProject.showModal()
+         this.$preloaders.close({ transition: 'preloaders' });
+       });
+     },
       handleModalImages(id) {
         this.$preloaders.open({component: Preloader})
         let request = this.$axios.$get(`api/project/${id}`);
         request.then(res => {
           console.log('project', res)
-          this.project = res.data
+          this.project = res.data[0]
           this.$refs.modalProjectImages.showModal()
           this.$preloaders.close({ transition: 'preloaders' });
         });
+      },
+      handleRefreshTable() {
+        this.$refs.tableProject.getProjects()
+      },
+      showModalControlImage () {
+         this.$refs.modalEditProject.closeModal()
+         this.handleModalImages(this.project.id)
       }
   },
   watch:{

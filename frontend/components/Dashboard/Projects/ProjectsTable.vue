@@ -22,6 +22,7 @@
       :key="project.id"
       :data='project'
       @handleModalImages="handleModalImages"
+      @handleModalEdit="handleModalEdit"
     />
   </div>
 </template>
@@ -54,6 +55,9 @@ export default {
     },
     handleModalImages (id) {
       this.$emit('handleModalImages', id)
+    },
+    handleModalEdit (id) {
+      this.$emit('handleModalEdit', id)
     }
   }
 }

@@ -17,7 +17,7 @@
         <i class="fas fa-plus"></i>
         <div class="projectTable__optionsContainer" v-if="viewBtn">
           <ul>
-            <li>Edit</li>
+            <li @click="editProject(data.id)">Edit</li>
             <li>View</li>
             <li>Delete</li>
             <li @click="imagesControl(data.id)">Images</li>
@@ -44,6 +44,9 @@ export default {
   methods: {
     showBtn () {
       this.viewBtn = !this.viewBtn
+    },
+    editProject (id) {
+      this.$emit('handleModalEdit', id)
     },
     imagesControl (id) {
       this.$emit('handleModalImages', id)

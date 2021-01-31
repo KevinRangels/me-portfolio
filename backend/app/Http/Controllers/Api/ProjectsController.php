@@ -40,13 +40,25 @@ class ProjectsController extends Controller
         $projects = Project::with('technologies')->get();
         foreach ($projects as $key => $valueProject) {
             $valueProject->images = json_decode($valueProject->images);
+             if ($valueProject->image_order !== null) {
+                $valueProject->image_order = json_decode($valueProject->image_order);
+             }
         }
         foreach ($projects as $key => $value) {
+            // Get All Images
             foreach ($value->images as $key => $valueImage) {
                 $images[] =  url('/').'/uploads/projects/'.$valueImage;
             }
+            // Get Images Order
+            foreach ($value->image_order as $key => $valueImage) {
+              if ($valueProject->image_order !== null) {
+                $image_order[] =  url('/').'/uploads/projects/'.$valueImage;
+              } else {
+                $image_order = []; 
+              }
+            }
             $value->images =  $images;
-            $images = array();
+            $value->image_order =  $image_order;
         }
 
         return $this->sendResponse($projects->toArray(), 'Proyectos obtenido con exito.');
@@ -56,12 +68,24 @@ class ProjectsController extends Controller
         $project = Project::with('technologies')->where('id', $id)->get();
         foreach ($project as $key => $valueProject) {
             $valueProject->images = json_decode($valueProject->images);
+            if ($valueProject->image_order !== null) {
+                $valueProject->image_order = json_decode($valueProject->image_order);
+             }
         }
         foreach ($project as $key => $value) {
             foreach ($value->images as $key => $valueImage) {
                 $images[] =  url('/').'/uploads/projects/'.$valueImage;
             }
+            // Get Images Order
+            foreach ($value->image_order as $key => $valueImage) {
+              if ($valueProject->image_order !== null) {
+                $image_order[] =  url('/').'/uploads/projects/'.$valueImage;
+              } else {
+                $image_order = []; 
+              }
+            }
             $value->images =  $images;
+            $value->image_order =  $image_order;
         }
         return $this->sendResponse($project, 'Proyecto obtenido con exito.');
     }
@@ -177,7 +201,7 @@ class ProjectsController extends Controller
     {
         $project = Project::findOrFail($id);
         // Update Poster project
-        $project->images = $request->get('images');
+        $project->image_order = $request->get('images');
         $project->update();
 
         return $this->sendResponse($project->toArray(), 'Image poster updated');

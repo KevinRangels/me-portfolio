@@ -22,6 +22,7 @@ class CreateProjectsTable extends Migration
             $table->string('link');
             $table->string('repository')->nullable();
             $table->string('images')->nullable();
+            $table->string('image_order')->nullable();
             $table->string('image_poster')->nullable();
             $table->date('date');
             $table->timestamps();

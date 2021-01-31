@@ -2,6 +2,7 @@
   <div class="ModalImagesProject">
     <b-modal v-model="modalShow" id="imgProject" centered size="lg" :hide-footer="true" :hide-header="true" body-class="modalBody">
         <h3 class="ModalAddTech__title mb-3">Control Images</h3>
+        <p class="text-white">{{orderImages}}</p>
         <div class="projectsImgs__container">
           <div class="projectsImgs__sectionMode mb-3">
             <div class="projectsImgs__containerCheckOrder">
@@ -48,7 +49,7 @@
             </div>
             <div class="projectsImgs__containerOrder">
               <h3 class="ModalAddTech__title mb-3">Order</h3>
-              <div class="projectsImgs__containerImgsOrder">
+              <div class="projectsImgs__containerImgsOrder" v-if="imageSelected.length > 0">
                 <div class="projectsImgs__containeImage"
                   v-for="(image, index) in imageSelected"
                   :key="index"
@@ -61,7 +62,7 @@
               
           </div>
             <div class="projectImgs__containerBtns w-100 mt-3">
-              <button class="dashboard__mainBtn">
+              <button class="dashboard__mainBtn" @click="saveOrderImages">
                 save
               </button>
             </div>
@@ -90,10 +91,13 @@ export default {
       modalShow: false,
       selectType: [],
       imageSelected: [],
-      imageSelectedPoster: []
+      imageSelectedPoster: [],
+      orderImages: [],
+      posterImage: null
     };
   },
   mounted() {
+    // this.getOrderImages()
   },
   methods: {
     showModal () {
@@ -102,16 +106,62 @@ export default {
     closeModal () {
       this.modalShow = false
     },
+    getOrderImages () {
+      if (this.project.image_order.length > 0) {
+        this.imageSelected = this.project.image_order
+      }
+    },
     handleSelectType (e) {
       this.selectType = []
       this.selectType.push(e.target.value)
+      if (e.target.value === 'order') {
+        this.getOrderImages()
+      }
     },
     handleSelectPoster (e) {
       this.imageSelectedPoster = []
       this.imageSelectedPoster.push(e.target.value)
+    },
+    saveOrderImages () {
+      const params = {
+        images: this.orderImages
+      }
+      this.$preloaders.open({component: Preloader})
+      let request = this.$axios.$post(`api/project-updated-order-images/${this.project.id}`, params);
+      request.then(res => {
+        console.log('order images project', res)
+        this.$preloaders.close({ transition: 'preloaders' });
+        // this.closeModal()
+      });
+    },
+    savePosterImage () {
+      const params = {
+        image_poster: this.posterImage
+      }
+      this.$preloaders.open({component: Preloader})
+      let request = this.$axios.$post(`api/project-updated-poster/${this.project.id}`, params);
+      request.then(res => {
+        console.log('order images project', res)
+        this.$preloaders.close({ transition: 'preloaders' });
+        this.closeModal()
+      });
     }
   },
   watch:{
+    imageSelected (newValue) {
+      this.orderImages = []
+      newValue.forEach(element => {
+        const nameImage = element.split('http://127.0.0.1:8000/uploads/projects/')
+        this.orderImages.push(nameImage[1])
+      });
+    },
+    imageSelectedPoster (newValue) {
+      newValue.forEach(element => {
+        const nameImage = element.split('http://127.0.0.1:8000/uploads/projects/')
+        this.posterImage = nameImage[1]
+        this.savePosterImage()
+      });
+    }
   }
 };
 </script>

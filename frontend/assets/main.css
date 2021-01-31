@@ -1,6 +1,9 @@
 *{
     margin: 0;
 }
+.preloaders {
+  z-index: 100000 !important;
+}
 #ProyectContainer .nav-tabs .nav-item {
     width: 33.3% !important;
     margin-bottom: -4px !important;

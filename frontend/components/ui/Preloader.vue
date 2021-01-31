@@ -22,6 +22,7 @@ export default {
   height: 150px;
   border-radius: 50%;
   perspective: 800px;
+  z-index: 100000;
 }
 
 .inner {

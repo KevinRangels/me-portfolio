@@ -37,4 +37,6 @@ Route::post('project', 'Api\ProjectsController@storeProject');
 Route::post('project/{id}', 'Api\ProjectsController@editProject');
 Route::delete('projects/{id}', 'Api\ProjectsController@destroyProject');
 Route::post('projects-updated-images/{id}', 'Api\ProjectsController@updatedImagesProject');
+Route::post('project-updated-order-images/{id}', 'Api\ProjectsController@updatedOrderImages');
+Route::post('project-updated-poster/{id}', 'Api\ProjectsController@updatedPoster');
 

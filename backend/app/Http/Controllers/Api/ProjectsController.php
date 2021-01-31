@@ -43,7 +43,7 @@ class ProjectsController extends Controller
         }
         foreach ($projects as $key => $value) {
             foreach ($value->images as $key => $valueImage) {
-                $images[] =  url('/').'/uploads/projects/'.$value->name.'/'.$valueImage;
+                $images[] =  url('/').'/uploads/projects/'.$valueImage;
             }
             $value->images =  $images;
             $images = array();
@@ -59,7 +59,7 @@ class ProjectsController extends Controller
         }
         foreach ($project as $key => $value) {
             foreach ($value->images as $key => $valueImage) {
-                $images[] =  url('/').'/uploads/projects/'.$value->name.'/'.$valueImage;
+                $images[] =  url('/').'/uploads/projects/'.$valueImage;
             }
             $value->images =  $images;
         }
@@ -85,7 +85,7 @@ class ProjectsController extends Controller
             foreach($request->file('images') as $file)
             {
                 $name_file = time()."_".$file->getClientOriginalName();
-                Storage::disk('uploads')->put("uploads/projects/".$request->get('name')."/".$name_file,  \File::get($file));  
+                Storage::disk('uploads')->put("uploads/projects/".$name_file,  \File::get($file));  
                 $data[] = $name_file;  
             }
          }
@@ -121,7 +121,7 @@ class ProjectsController extends Controller
             foreach($request->file('images') as $file)
             {
                 $name_file = time().'.'.$file->extension();
-                Storage::disk('uploads')->put("files/projects/".$project->name."/".$name_file,  \File::get($file));  
+                Storage::disk('uploads')->put("files/projects/".$name_file,  \File::get($file));  
                 $data[] = $name_file;  
             }
          }
@@ -171,5 +171,25 @@ class ProjectsController extends Controller
         $project = Project::findOrFail($id);
         $project->delete();
         return $this->sendResponse($project->toArray(), 'Technology deleted successfully.');
+    }
+
+    public function updatedOrderImages($id, Request $request)
+    {
+        $project = Project::findOrFail($id);
+        // Update Poster project
+        $project->images = $request->get('images');
+        $project->update();
+
+        return $this->sendResponse($project->toArray(), 'Image poster updated');
+    }
+
+    public function updatedPoster($id, Request $request)
+    {
+        $project = Project::findOrFail($id);
+        // Update Poster project
+        $project->image_poster = $request->get('image_poster');
+        $project->update();
+
+        return $this->sendResponse($project->toArray(), 'Image poster updated');
     }
 }

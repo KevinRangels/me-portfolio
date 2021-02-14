@@ -34,9 +34,9 @@ class TechnolgiesController extends Controller
         return response()->json($response, $code);
     }
 
-    public function getAllTechnolgy()
+    public function getAllTechnolgy(Request $request)
     {
-        $technolgy = Technology::with('language')->get();
+        $technolgy = Technology::search($request->q);
         foreach ($technolgy as $key => $value) {
             $value->skills = json_decode($value->skills);
             $value->image =  url('/').'/uploads/technologies/'.$value->image;

@@ -35,9 +35,16 @@ class ProjectsController extends Controller
         return response()->json($response, $code);
     }
 
-    public function getAllProject()
+    public function getAllProject(Request $request)
     {
-        $projects = Project::with('technologies')->get();
+        $projects = Project::foo($request->technology);
+        $data = $request->all();
+        if (isset($data['name'])) {
+            $name = $data['name'];
+            $projects->where('name', 'like', "%$name%");
+        }
+        $projects = $projects->get();
+        // $projects = Project::with('technologies')->get();
         foreach ($projects as $key => $valueProject) {
             $valueProject->images = json_decode($valueProject->images);
              if ($valueProject->image_order !== null) {
@@ -50,13 +57,13 @@ class ProjectsController extends Controller
                 $images[] =  url('/').'/uploads/projects/'.$valueImage;
             }
             // Get Images Order
-            foreach ($value->image_order as $key => $valueImage) {
-              if ($valueProject->image_order !== null) {
-                $image_order[] =  url('/').'/uploads/projects/'.$valueImage;
+            if ($valueProject->image_order !== null) {
+                foreach ($value->image_order as $key => $valueImage) {
+                    $image_order[] =  url('/').'/uploads/projects/'.$valueImage;
+                }
               } else {
-                $image_order = []; 
+                  $image_order = []; 
               }
-            }
             $value->images =  $images;
             $value->image_order =  $image_order;
         }
@@ -77,12 +84,12 @@ class ProjectsController extends Controller
                 $images[] =  url('/').'/uploads/projects/'.$valueImage;
             }
             // Get Images Order
-            foreach ($value->image_order as $key => $valueImage) {
-              if ($valueProject->image_order !== null) {
+            if ($valueProject->image_order !== null) {
+              foreach ($value->image_order as $key => $valueImage) {
                 $image_order[] =  url('/').'/uploads/projects/'.$valueImage;
-              } else {
-                $image_order = []; 
               }
+            } else {
+                $image_order = []; 
             }
             $value->images =  $images;
             $value->image_order =  $image_order;

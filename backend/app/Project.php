@@ -13,4 +13,16 @@ class Project extends Model
     public function technologies() {
         return $this->belongsToMany('App\Technology');
     }
+
+    public function scopeFoo($query, $technology_id)
+{
+    if(!$technology_id) {
+        return self::with('technologies');
+    }
+    return $query->whereHas('technologies', function ($query) use ($technology_id) {
+        $query->where('project_technology.technology_id', $technology_id);
+    })->with('technologies');
+
+}
+
 }
